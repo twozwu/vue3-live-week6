@@ -1,18 +1,17 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <navComponent ref="abc"></navComponent>
+  <router-view></router-view>
 </template>
 
+<style lang="scss">
+@import 'bootstrap';
+</style>
+
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import navComponent from '../components/Nav.vue';
 
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld,
-  },
+  components: { navComponent },
+  mounted() {},
 };
 </script>
