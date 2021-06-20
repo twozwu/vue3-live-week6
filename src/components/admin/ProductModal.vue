@@ -37,12 +37,13 @@
                   class="form-control"
                   placeholder="請輸入圖片連結"
                   ref="file"
+                  v-if="!products.imageUrl"
                   @change="tempImg"
                 />
                 <img class="img-fluid" :src="products.imageUrl" />
               </div>
               <div class="mb-1">多圖新增</div>
-              <div v-if="products.imagesUrl.length > 0">
+              <div v-if="products.imagesUrl">
                 <div class="mb-1" v-for="(img, key) in products.imagesUrl" :key="key">
                   <div class="form-group">
                     <label for="imagesUrl">輸入圖片網址</label>
@@ -52,7 +53,13 @@
                       placeholder="請輸入圖片連結"
                       v-model="products.imagesUrl[key]"
                     />
-                    <input type="file" class="form-control" ref="file" @change="tempImg" />
+                    <input
+                      type="file"
+                      class="form-control"
+                      ref="file"
+                      v-if="!products.imagesUrl[key]"
+                      @change="tempImg"
+                    />
                     <!-- (2). 依序綁定(1)開出來的資料欄位 -->
                     <img class="img-fluid" :src="img" alt="" />
                   </div>
@@ -71,7 +78,7 @@
                   <button
                     type="button"
                     class="btn btn-outline-primary btn-sm d-block w-100"
-                    @click="products.imagesUrl.push('')"
+                    @click="addImg"
                   >
                     <!-- (1). push：本來沒有欄位，push一個空字串產生欄位 -->
                     新增圖片(in多圖)
@@ -281,7 +288,11 @@ export default {
         .catch((error) => console.log(error));
     },
     addImg() {
-      this.products.imagesUrl.push('');
+      if (!this.products.imagesUrl) {
+        this.products.imagesUrl = [''];
+      } else {
+        this.products.imagesUrl.push('');
+      }
     },
     autoImg() {
       this.products.imageUrl = 'https://picsum.photos/400';
